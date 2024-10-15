@@ -1,4 +1,8 @@
-from tkinter import Tk, BOTH, Canvas
+from tkinter import *
+from tkinter import ttk
+from typing import Type
+
+from src.line import Line
 
 
 class Window:
@@ -10,7 +14,11 @@ class Window:
         self.canvas.pack()
         self.running = False
 
+
+    def draw_line(self, line: Type[Line], fill_color: str) -> None:
+        line.draw(self.canvas, fill_color)
         
+
     def redraw(self):
         self.root.update_idletasks()
         self.root.update()
