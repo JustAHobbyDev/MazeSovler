@@ -11,6 +11,6 @@ class Line():
 
         
     def draw(self, canvas: Type[Canvas], fill_color: str) -> None:
-        x1, x2 = self.point_1.x, self.point_1.y
-        y1, y2 = self.point_2.x, self.point_2.y
+        x1, y1 = self.point_1.x, self.point_1.y
+        x2, y2 = self.point_2.x, self.point_2.y
         canvas.create_line(x1, y1, x2, y2, fill=fill_color, width=2)
