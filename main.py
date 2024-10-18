@@ -5,8 +5,8 @@ from src.window import Window
 from src.line import Line
 from src.point import Point
 
-def draw_cell(x1, y1, x2, y2, win):
-    Cell(x1, y1, x2, y2, win).draw()
+def draw_cell(cell):
+    cell.draw()
     
 def draw_left_wall(c, win):
     c.left_wall = True
@@ -50,15 +50,18 @@ def main():
         # line = Line(point_a, point_b)
         # fill_color = 'black'
         # win.draw_line(line, fill_color)
-    draw_cell(10, 10, 100, 100, win)
+    a, b = 10, 100
+    cell_width = b - a
+    c1 = Cell(a, a, b, b, win)
+    draw_cell(c1)
 
-    draw_cell(110, 110, 200, 200, win)
+    c, d = a + cell_width, b + cell_width
+    c2 = Cell(c, a, d, b, win)
+    draw_cell(c2)
 
-    c = Cell(200, 10, 250, 100, win)
-    draw_left_wall(c, win)
-    draw_right_wall(c, win)
-    draw_top_wall(c, win)
-    draw_bottom_wall(c, win)
+    c1.draw_move(c2)
+
+
 
     win.wait_for_close()
 
