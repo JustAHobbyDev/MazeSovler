@@ -1,12 +1,12 @@
 from typing import Type
 from tkinter import Canvas
 
-from src.line import Line
-from src.point import Point
+from line import Line
+from point import Point
 
 
 class Cell:
-    def __init__(self, x1, y1, x2, y2, win):
+    def __init__(self, x1, y1, x2, y2, win=None):
         self.left_wall = True
         self.right_wall = True
         self.top_wall = True

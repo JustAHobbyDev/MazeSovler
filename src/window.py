@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from typing import Type
 
-from src.line import Line
+from line import Line
 
 
 class Window:

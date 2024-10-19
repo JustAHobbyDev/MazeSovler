@@ -1,5 +1,14 @@
+import os
+import sys
+
+this_dir = os.path.dirname(__file__)
+base_dir = os.path.abspath(os.path.join(this_dir, "src"))
+sys.path.insert(0, base_dir)
+
+
 import random
 from copy import deepcopy
+from maze import Maze
 from src.cell import Cell
 from src.window import Window
 from src.line import Line
@@ -50,17 +59,22 @@ def main():
         # line = Line(point_a, point_b)
         # fill_color = 'black'
         # win.draw_line(line, fill_color)
-    a, b = 10, 100
-    cell_width = b - a
-    c1 = Cell(a, a, b, b, win)
-    draw_cell(c1)
 
-    c, d = a + cell_width, b + cell_width
-    c2 = Cell(c, a, d, b, win)
-    draw_cell(c2)
+    # a, b = 100, 10
+    # cell_width = a - b
+    # c1 = Cell(a, a, b, b, win)
+    # draw_cell(c1)
 
-    c1.draw_move(c2)
+    # c, d = a + cell_width, b + cell_width
+    # c2 = Cell(c, a, d, b, win)
+    # draw_cell(c2)
+    # c1.draw_move(c2)
 
+    m = Maze(10, 10, 10, 13, 40, 60, win=win)
+    for i, col in enumerate(m._cells):
+        for j, cell in enumerate(col):
+            print(f'cell:{i}:{j} => x1:{cell._x1}, y1:{cell._y1}, x2:{cell._x2}, y2:{cell._y2}')
+            cell.draw()
 
 
     win.wait_for_close()
