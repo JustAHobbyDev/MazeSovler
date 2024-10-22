@@ -1,5 +1,3 @@
-
-
 from time import sleep
 from tkinter import Canvas
 from typing import Type
@@ -44,6 +42,22 @@ class Maze:
             for j, cell in enumerate(col):
                 print(f'cell:{i}:{j} => x1:{cell._x1}, y1:{cell._y1}, x2:{cell._x2}, y2:{cell._y2}')
                 cell.draw()
+
+                
+    def get_neighbors(self, i, j):
+        neighbors = []
+
+        for n in [-1, 1]:
+            d0 = i + n
+            if d0 == (i-1) or d0 == (i+1):
+                if d0 >= 0 and d0 < self.rows:
+                    neighbors.append((d0, j))
+            d1 = j + n
+            if d1 == (j-1) or d1 == (j+1):
+                if d1 >= 0 and d1 < self.cols:
+                    neighbors.append((i, d1))
+
+        return neighbors
 
             
     def _break_entrance_and_exit(self):
