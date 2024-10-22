@@ -19,26 +19,29 @@ class Cell:
 
         
     def draw(self):
+        p0 = Point(self._x1, self._y1)
+        p1 = Point(self._x1, self._y2)
         if self.left_wall:
-            p0 = Point(self._x1, self._y1)
-            p1 = Point(self._x1, self._y2)
-            l1 = Line(p0, p1)
-            self._win.draw_line(l1, "black")
+            self._win.draw_line(Line(p0, p1), "black")
+        else:
+            self._win.draw_line(Line(p0, p1),self._win.canvas['background'])
+
+        p0 = Point(self._x2, self._y1)
+        p1 = Point(self._x2, self._y2)
         if self.right_wall:
-            p0 = Point(self._x2, self._y1)
-            p1 = Point(self._x2, self._y2)
-            l2 = Line(p0, p1)
-            self._win.draw_line(l2, "black")
+            self._win.draw_line(Line(p0, p1), "black")
+        else:
+            self._win.draw_line(Line(p0, p1), self._win.canvas['background'])
+
         if self.top_wall:
-            p0 = Point(self._x1, self._y2)
-            p1 = Point(self._x2, self._y2)
-            l3 = Line(p0, p1)
-            self._win.draw_line(l3, "black")
+            self._win.draw_line(Line(Point(self._x1, self._y1), Point(self._x2, self._y1)), "black")
+        else:
+            self._win.draw_line(Line(Point(self._x1, self._y1), Point(self._x2, self._y1)), self._win.canvas['background'])
+
         if self.bottom_wall:
-            p0 = Point(self._x1, self._y1)
-            p1 = Point(self._x2, self._y1)
-            l4 = Line(p0, p1)
-            self._win.draw_line(l4, "black")
+            self._win.draw_line(Line(Point(self._x1, self._y2), Point(self._x2, self._y2)), "black")
+        else:
+            self._win.draw_line(Line(Point(self._x1, self._y2), Point(self._x2, self._y2)), self._win.canvas['background'])
 
             
     def draw_move(self, to_cell, undo=False):
