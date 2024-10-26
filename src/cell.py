@@ -1,6 +1,3 @@
-from typing import Type
-from tkinter import Canvas
-
 from line import Line
 from point import Point
 
@@ -16,6 +13,7 @@ class Cell:
         self._y1 = y1
         self._y2 = y2
         self._win = win
+        self.visited = False
 
         
     def draw(self):
@@ -31,21 +29,32 @@ class Cell:
         if self.right_wall:
             self._win.draw_line(Line(p0, p1), "black")
         else:
-            self._win.draw_line(Line(p0, p1), self._win.canvas['background'])
+            self._win.draw_line(Line(p0, p1), self._win.canvas["background"])
 
         if self.top_wall:
-            self._win.draw_line(Line(Point(self._x1, self._y1), Point(self._x2, self._y1)), "black")
+            self._win.draw_line(
+                Line(Point(self._x1, self._y1), Point(self._x2, self._y1)), "black"
+            )
         else:
-            self._win.draw_line(Line(Point(self._x1, self._y1), Point(self._x2, self._y1)), self._win.canvas['background'])
+            self._win.draw_line(
+                Line(Point(self._x1, self._y1), Point(self._x2, self._y1)),
+                self._win.canvas["background"],
+            )
 
         if self.bottom_wall:
-            self._win.draw_line(Line(Point(self._x1, self._y2), Point(self._x2, self._y2)), "black")
+            self._win.draw_line(
+                Line(Point(self._x1, self._y2), Point(self._x2, self._y2)), "black"
+            )
         else:
-            self._win.draw_line(Line(Point(self._x1, self._y2), Point(self._x2, self._y2)), self._win.canvas['background'])
+            self._win.draw_line(
+                Line(Point(self._x1, self._y2), Point(self._x2, self._y2)),
+                self._win.canvas["background"],
+            )
 
             
     def draw_move(self, to_cell, undo=False):
-        line_color = 'gray' if undo else 'red'
+        print('draw_move called')
+        line_color = 'green' if undo else 'red'
         # xy to ab
         _x = self._x1 + (self._x2 - self._x1) / 2.0
         _y = self._y1 + (self._y2 - self._y1) / 2.0
