@@ -130,12 +130,13 @@ class Maze:
     
     
     def _solve_r(self, i, j):
-        print(f"I've been called!")
         self._animate()
         current_cell = self._cells[i][j]
         current_cell.visited = True
-        if i == len(self._cells) and j == len(self._cells[0]):
+
+        if (i == self.rows - 1) and (j == self.cols - 1):
             return True
+
         neighbors = self.get_neighbors(i, j)
         for neighbor in neighbors:
             m, n = neighbor
@@ -143,47 +144,58 @@ class Maze:
             if n_cell.visited:
                 continue
 
-            dx, dy = i - m, j - n
+            # (0, 0) (1, 0) => (-1, 0) DOWN
+            # (1, 0) (0, 0) => (1, 0) UP
+            # (0, 0) (0, 1) => (0, -1) RIGHT
+            # (0, 1) (0, 0) => (0, 1) LEFT
+            dx = i - m
+            dy = j - n
             print(f"dx: {dx}, dy: {dy}")
-            if dx == -1: # left
-                left = n_cell
-                right = current_cell
-                if not left.right_wall and left.right_wall == right.left_wall:
+
+            if dx == -1: # DOWN
+                bottom = n_cell
+                top = current_cell
+                if not top.bottom_wall and not bottom.top_wall:
                     current_cell.draw_move(n_cell)
-                    if self._solve_r(m, n):
+                    solve_next_cell = self._solve_r(m, n)
+                    if solve_next_cell:
                         return True
                     else:
                         current_cell.draw_move(n_cell, undo=True)
-            if dx == 1: # Right
-                left = current_cell
-                right = n_cell
-                if not left.right_wall and left.right_wall == right.left_wall:
+            if dx == 1: # UP
+                top = n_cell
+                bottom = current_cell
+                if not top.bottom_wall and not bottom.top_wall:
                     current_cell.draw_move(n_cell)
-                    if self._solve_r(m, n):
+                    solve_next_cell = self._solve_r(m, n)
+                    if solve_next_cell:
                         return True
                     else:
                         current_cell.draw_move(n_cell, undo=True)
                     
-            if dy < 0: # Down
-                top = current_cell
-                bottom = n_cell
-                if not top.bottom_wall and top.bottom_wall and bottom.top_wall:
+            if dy == -1: # RIGHT
+                left = current_cell
+                right = n_cell
+                if not left.right_wall and not right.left_wall:
                     current_cell.draw_move(n_cell)
-                    if self._solve_r(m, n):
+                    solved = self._solve_r(m, n)
+                    if solved:
                         return True
-                    else:
-                        current_cell.draw_move(n_cell, undo=True)
-            else:
-                top = n_cell
-                bottom = current_cell
-                if not top.bottom_wall and top.bottom_wall and bottom.top_wall:
+                    current_cell.draw_move(n_cell, undo=True)
+            if dy == 1: # LEFT
+                left = n_cell
+                right = current_cell
+                if not left.right_wall and not right.left_wall:
                     current_cell.draw_move(n_cell)
-                    if self._solve_r(m, n):
+                    solve_next_cell = self._solve_r(m, n)
+                    if solve_next_cell:
                         return True
                     else:
                         current_cell.draw_move(n_cell, undo=True)
                     
         print("_solve_r => False")
+        print(f"current_cell: ({i}, {j}), visited: {current_cell.visited}")
+        print(f"n_cell: ({m}, {n}), visited: {n_cell.visited}")
         return False
 
         
